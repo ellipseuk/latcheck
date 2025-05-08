@@ -1,0 +1,100 @@
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color: linear-gradient(to bottom right, #eef5ff, #d9e9ff);
+    -fx-text-fill: #0D2642;
+}
+
+/* ======= Input Fields ======= */
+
+.text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c0d6ff;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    -fx-padding: 6 12;
+    -fx-pref-height: 32;
+    -fx-alignment: center-left;
+}
+
+/* ======= Buttons ======= */
+
+.button {
+    -fx-background-color: #4682F9;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 6 12;
+    -fx-pref-height: 32;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-content-display: center;
+}
+
+.button:hover {
+    -fx-background-color: #5a90fb;
+}
+
+.button:pressed {
+    -fx-background-color: #346ae2;
+}
+
+/* ======= Stat Boxes ======= */
+
+.stat-box {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 10;
+    -fx-spacing: 4;
+    -fx-min-width: 100;
+    -fx-alignment: center;
+}
+
+.stat-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0D2642;
+}
+
+/* ======= Chart Container ======= */
+
+.chart-box {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+}
+
+/* ======= LineChart Styling ======= */
+
+.chart {
+    -fx-background-color: transparent;
+}
+
+.chart-plot-background {
+    -fx-background-color: #f4f8ff;
+    -fx-border-color: transparent;
+}
+
+.chart-series-line {
+    -fx-stroke: #4682F9;
+    -fx-stroke-width: 2px;
+}
+
+.chart-symbol {
+    -fx-background-color: white, #4682F9;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 4;
+}
+
+.chart-legend {
+    -fx-text-fill: #0D2642;
+    -fx-background-color: transparent;
+}
