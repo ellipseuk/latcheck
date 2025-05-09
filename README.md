@@ -18,8 +18,7 @@
 - One-click export to .csv
 
 ## UI
-
-![img_1.png](img_1.png)
+![ui.png](docs/ui.png)
 
 ## Requirements
 
