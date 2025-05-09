@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LatcheckApp extends Application {
 
@@ -12,11 +13,12 @@ public class LatcheckApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/main.fxml"));
         Scene scene = new Scene(loader.load());
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setTitle("Latcheck");
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setWidth(800);
-        primaryStage.setHeight(640);
+        primaryStage.setWidth(720);
+        primaryStage.setHeight(540);
         primaryStage.setResizable(false);
     }
 

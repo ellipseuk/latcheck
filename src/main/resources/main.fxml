@@ -5,60 +5,79 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.latcheck.controller.MainController"
-      spacing="20" alignment="TOP_CENTER">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.latcheck.controller.MainController"
+            styleClass="main-root">
 
-    <padding>
-        <Insets top="20" left="20" right="20" bottom="20"/>
-    </padding>
-
-    <HBox spacing="10" alignment="CENTER" prefWidth="Infinity">
-        <TextField fx:id="urlField" promptText="https://api.example.com" prefWidth="300"/>
-
-        <Region HBox.hgrow="ALWAYS"/>
-
-        <HBox spacing="20" alignment="CENTER_RIGHT">
-            <Label text="Requests:"/>
-            <TextField fx:id="requestCountField" promptText="10" prefWidth="80"/>
-            <Button text="Start" onAction="#onRunTest" prefWidth="100"/>
+    <top>
+        <HBox fx:id="titleBar" styleClass="title-bar" prefHeight="30" alignment="CENTER_LEFT">
+            <Label text="latcheck" styleClass="title-label"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="0" alignment="CENTER_RIGHT">
+                <Button text="—" onAction="#onMinimizeClicked" styleClass="window-button"/>
+                <Button text="✕" onAction="#onCloseClicked" styleClass="window-button"/>
+            </HBox>
         </HBox>
-    </HBox>
+    </top>
 
-    <HBox spacing="20" alignment="CENTER">
-        <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
-            <Label text="Avg"/>
-            <Label fx:id="avgLabel" styleClass="stat-value"/>
-        </VBox>
-        <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
-            <Label text="Min"/>
-            <Label fx:id="minLabel" styleClass="stat-value"/>
-        </VBox>
-        <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
-            <Label text="Max"/>
-            <Label fx:id="maxLabel" styleClass="stat-value"/>
-        </VBox>
-        <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
-            <Label text="Errors"/>
-            <Label fx:id="errorLabel" styleClass="stat-value"/>
-        </VBox>
-    </HBox>
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER" styleClass="content-area">
+            <padding>
+                <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
 
-    <StackPane styleClass="chart-box" VBox.vgrow="ALWAYS">
-        <LineChart fx:id="latencyChart" prefHeight="350" prefWidth="600">
-            <xAxis>
-                <NumberAxis label="Request"/>
-            </xAxis>
-            <yAxis>
-                <NumberAxis label="ms"/>
-            </yAxis>
-        </LineChart>
-    </StackPane>
+            <HBox spacing="10" alignment="CENTER" prefWidth="Infinity">
+                <TextField fx:id="urlField" promptText="https://api.example.com" prefWidth="300"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <HBox spacing="20" alignment="CENTER_RIGHT">
+                    <Label text="Requests:"/>
+                    <TextField fx:id="requestCountField" promptText="10" prefWidth="80"/>
+                    <Button fx:id="runButton" text="Start" onAction="#onRunTest" prefWidth="100"/>
+                </HBox>
+            </HBox>
 
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Export" onAction="#onExportCSV" prefWidth="140"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Button text="Reset" onAction="#onReset" prefWidth="140"/>
-    </HBox>
+            <HBox spacing="20" alignment="CENTER">
+                <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
+                    <Label text="Avg" styleClass="stat-label"/>
+                    <Label fx:id="avgLabel" styleClass="stat-value"/>
+                </VBox>
+                <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
+                    <Label text="Min" styleClass="stat-label"/>
+                    <Label fx:id="minLabel" styleClass="stat-value"/>
+                </VBox>
+                <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
+                    <Label text="Max" styleClass="stat-label"/>
+                    <Label fx:id="maxLabel" styleClass="stat-value"/>
+                </VBox>
+                <VBox styleClass="stat-box" HBox.hgrow="ALWAYS" alignment="CENTER">
+                    <Label text="Errors" styleClass="stat-label"/>
+                    <Label fx:id="errorLabel" styleClass="stat-value"/>
+                </VBox>
+            </HBox>
 
-</VBox>
+            <!-- CHART AREA WITH LOADING OVERLAY -->
+            <StackPane styleClass="chart-box" VBox.vgrow="ALWAYS">
+                <LineChart fx:id="lineChart" styleClass="latcheck-chart" prefHeight="350" prefWidth="600">
+                    <xAxis>
+                        <NumberAxis label="Request"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="ms"/>
+                    </yAxis>
+                </LineChart>
+
+                <!-- LOADING INDICATOR -->
+                <ProgressIndicator fx:id="loadingIndicator"
+                                   visible="false"
+                                   prefWidth="50"
+                                   prefHeight="50"/>
+            </StackPane>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Export" onAction="#onExportCSV" prefWidth="140"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Reset" onAction="#onReset" prefWidth="140"/>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
