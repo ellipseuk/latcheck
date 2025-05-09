@@ -29,6 +29,7 @@
 
 ```bash
 mvn javafx:run
+```
 
 ## License
 
