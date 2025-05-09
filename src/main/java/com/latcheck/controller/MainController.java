@@ -34,11 +34,10 @@ public class MainController extends AbstractController {
     @FXML private LineChart<Number, Number> lineChart;
     @FXML private Button runButton;
 
+    @FXML private HBox titleBar;
+
     private final ServiceTester tester = new ServiceTester();
     private final ExportService exporter = new ExportService();
-
-    @FXML
-    private HBox titleBar;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -77,23 +76,17 @@ public class MainController extends AbstractController {
     @FXML
     private void onRunTest() {
         String url = urlField.getText();
-        int count;
+        String countText = requestCountField.getText();
 
-        try {
-            count = Integer.parseInt(requestCountField.getText());
-            if (count < 1 || count > 1000) throw new NumberFormatException();
-        } catch (NumberFormatException e) {
-            showAlert("Input Error", "Enter a number between 1 and 1000", Alert.AlertType.WARNING);
+        if (!isValidInput(url, countText)) {
+            showAlert("Input Error", "Enter valid URL and number between 1 and 1000", Alert.AlertType.WARNING);
             return;
         }
 
-        if (url == null || url.isBlank()) {
-            showAlert("Input Error", "Enter a valid URL", Alert.AlertType.WARNING);
-            return;
-        }
+        int count = Integer.parseInt(countText);
 
-        if (runButton != null) runButton.setDisable(true);
-        if (loadingIndicator != null) loadingIndicator.setVisible(true);
+        runButton.setDisable(true);
+        loadingIndicator.setVisible(true);
 
         Task<List<LatencyResult>> task = new Task<>() {
             @Override
@@ -102,26 +95,31 @@ public class MainController extends AbstractController {
             }
         };
 
-        task.setOnSucceeded(event -> {
+        task.setOnSucceeded(e -> {
             List<LatencyResult> results = task.getValue();
             updateChart(results);
             updateMetrics(results);
-
-            if (runButton != null) runButton.setDisable(false);
-            if (loadingIndicator != null) loadingIndicator.setVisible(false);
+            runButton.setDisable(false);
+            loadingIndicator.setVisible(false);
         });
 
-        task.setOnFailed(event -> {
-            Throwable ex = task.getException();
-            showAlert("Test Failed", ex.getMessage(), Alert.AlertType.ERROR);
-
-            if (runButton != null) runButton.setDisable(false);
-            if (loadingIndicator != null) loadingIndicator.setVisible(false);
+        task.setOnFailed(e -> {
+            showAlert("Test Failed", task.getException().getMessage(), Alert.AlertType.ERROR);
+            runButton.setDisable(false);
+            loadingIndicator.setVisible(false);
         });
 
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
+        new Thread(task).start();
+    }
+
+    public boolean isValidInput(String url, String countText) {
+        try {
+            int count = Integer.parseInt(countText);
+            if (count < 1 || count > 1000) return false;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return url != null && !url.isBlank();
     }
 
     private void updateChart(List<LatencyResult> results) {
